@@ -20,11 +20,11 @@
         </form>
         <div class='user-auth'>
           <div class = 'logged-out'>
-            <button class='sign-up-open'>Sign up</button>
-            <button class='sign-in-open'>Sign in</button>
+            <button class='show-sign-up'>Sign up</button>
+            <button class='show-sign-in'>Sign in</button>
           </div>
           <div class='logged-in'>
-            <button class='change-pw-open'>Change Password</button>
+            <button class='show-change-pw'>Change Password</button>
             <button class='user-sign-out'>Sign out</button>
           </div>
         </div>
@@ -39,37 +39,13 @@
             <button class='filter-all'>All Recipes</button>
             <button class='filter-favorite'>Favorites</button>
             <button class='filter-user'>Your Recipes</button>
+            <button class='show-recipe-form'>New Recipe</button>
           </div>
         </nav>
         <div class='main-content'>
         </div>
         <div class='overlay'>
-          <div class='logged-out'>
-            <form class='overlay-form user-sign-in'>
-              <button class='overlay-exit'>x</button>
-              <input type="email" name="credentials[email]" placeholder='Email'>
-              <input type="password" name="credentials[password]" placeholder='Password'>
-              <input type="submit" value='Sign In'>
-              <h6 class='form-message'></h6>
-            </form>
-            <form class='overlay-form user-sign-up'>
-              <button class='overlay-exit'>x</button>
-              <input type="text" name="cook[name]" placeholder='User Name'>
-              <input type="email" name="credentials[email]" placeholder='Email'>
-              <input type="password" name="credentials[password]" placeholder='Password'>
-              <input type="password" name="credentials[password_confirmation]" placeholder='Password Confirmation'>
-              <input type="submit" value='Sign Up'>
-              <h6 class='form-message'></h6>
-            </form>
-          </div>
           <div class='logged-in'>
-            <form class='overlay-form user-change-pw'>
-              <button class='overlay-exit'>x</button>
-              <input type="password" name="passwords[old]" placeholder='Old Password'>
-              <input type="password" name="passwords[new]" placeholder='New Password'>
-              <input type="submit" value='Change Password'>
-              <h6 class='form-message'></h6>
-            </form>
             <form class='overlay-form recipe-update' data-id='0'>
               <button class='overlay-exit'>x</button>
               <input type="text" name="recipe[name]" placeholder='Recipe Name'>

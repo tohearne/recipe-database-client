@@ -9,10 +9,9 @@ const onSignUp = event => {
   const formData = getFormFields(event.target)
   event.target.reset()
   const signUpData = {credentials: formData['credentials']}
-  console.log(signUpData)
   api.signUp(signUpData)
     .then(returnData => {
-      ui.onSignUpSuccess(returnData)
+      ui.saveUserAuth(returnData)
       api.createCook(formData.cook.name)
         .then(ui.onCreateCookSuccess)
         .catch(val => { ui.onFailure('Sign Up') })
@@ -28,7 +27,10 @@ const onSignIn = event => {
     .then(returnData => {
       ui.onSignInSuccess(returnData)
       api.getUserData(returnData.user.id)
-        .then(ui.saveUserData)
+        .then(returnData => {
+          ui.saveUserData(returnData)
+          loggedIn()
+        })
         .catch()
     })
     .catch(val => { ui.onFailure('Sign In') })
@@ -53,11 +55,23 @@ const onSignOut = event => {
 const onCreateRecipe = event => {
   event.preventDefault()
   const formData = getFormFields(event.target)
-  console.log(formData)
+  event.target.reset()
+  api.createRecipe(formData.recipe.name)
+    .then(responseData => {
+      formData['ingredient-names'].forEach((name, index) => {
+        api.createIngredient(name, formData['ingredient-amounts'][index], responseData.recipe.id)
+      })
+      formData['step-titles'].forEach((title, index) => {
+        api.createStep(title, formData['step-instructions'][index], responseData.recipe.id)
+      })
+    })
+    .catch(val => { ui.onFailure('Create Recipe') })
 }
 
-const onLoad = event => {
-  ui.showRecipeForm()
+const loggedOut = () => {
+}
+
+const loggedIn = () => {
 }
 
 module.exports = {
@@ -66,5 +80,5 @@ module.exports = {
   onChangePassword,
   onSignOut,
   onCreateRecipe,
-  onLoad
+  loggedOut
 }

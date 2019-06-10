@@ -49,11 +49,52 @@ const signOut = formData => $.ajax({
   }
 })
 
+const createRecipe = name => $.ajax({
+  url: `${config.apiUrl}/recipes`,
+  method: 'POST',
+  data: {recipe: {
+    name: name,
+    cook_id: store.userData.cook.id
+  }},
+  headers: {
+    Authorization: `Token ${store.userAuth.token}`
+  }
+})
+
+const createIngredient = (name, amount, id) => $.ajax({
+  url: `${config.apiUrl}/ingredients`,
+  method: 'POST',
+  data: {ingredient: {
+    name: name,
+    amount: amount,
+    recipe_id: id
+  }},
+  headers: {
+    Authorization: `Token ${store.userAuth.token}`
+  }
+})
+
+const createStep = (title, instruction, id) => $.ajax({
+  url: `${config.apiUrl}/steps`,
+  method: 'POST',
+  data: {step: {
+    title: title,
+    instruction: instruction,
+    recipe_id: id
+  }},
+  headers: {
+    Authorization: `Token ${store.userAuth.token}`
+  }
+})
+
 module.exports = {
   signUp,
   createCook,
   getUserData,
   signIn,
   changePassword,
-  signOut
+  signOut,
+  createRecipe,
+  createIngredient,
+  createStep
 }
