@@ -47,53 +47,48 @@
           <div class='logged-out'>
             <form class='overlay-form user-sign-in'>
               <button class='overlay-exit'>x</button>
-              <input type="email" name="user[email]" placeholder='Email'>
-              <input type="password" name="user[password]" placeholder='Password'>
+              <input type="email" name="credentials[email]" placeholder='Email'>
+              <input type="password" name="credentials[password]" placeholder='Password'>
               <input type="submit" value='Sign In'>
-              <h6 class='form-error'></h6>
+              <h6 class='form-message'></h6>
             </form>
             <form class='overlay-form user-sign-up'>
               <button class='overlay-exit'>x</button>
               <input type="text" name="cook[name]" placeholder='User Name'>
-              <input type="email" name="user[email]" placeholder='Email'>
-              <input type="password" name="user[password]" placeholder='Password'>
-              <input type="password" name="user[password_confirmation]" placeholder='Password Confirmation'>
+              <input type="email" name="credentials[email]" placeholder='Email'>
+              <input type="password" name="credentials[password]" placeholder='Password'>
+              <input type="password" name="credentials[password_confirmation]" placeholder='Password Confirmation'>
               <input type="submit" value='Sign Up'>
-              <h6 class='form-error'></h6>
+              <h6 class='form-message'></h6>
             </form>
           </div>
           <div class='logged-in'>
             <form class='overlay-form user-change-pw'>
               <button class='overlay-exit'>x</button>
-              <input type="password" name="password[old]" placeholder='Old Password'>
-              <input type="password" name="password[new]" placeholder='New Password'>
+              <input type="password" name="passwords[old]" placeholder='Old Password'>
+              <input type="password" name="passwords[new]" placeholder='New Password'>
               <input type="submit" value='Change Password'>
-              <h6 class='form-error'></h6>
-            </form>
-            <form class='overlay-form recipe-create'>
-              <button class='overlay-exit'>x</button>
-              <input type="text" name="recipe[name]" placeholder='Recipe Name'>
-              <input type="text" name="ingredient[name]" placeholder='Ingredient Name'>
-              <input type="text" name="ingredient[amount]" placeholder='Amount'>
-              <input type="text" name="step[title]" placeholder='Step Name'>
-              <input type="text" name="step[instructions]" placeholder='Instructions'>
-              <input type="submit" value='Publish Recipe'>
-              <h6 class='form-error'></h6>
+              <h6 class='form-message'></h6>
             </form>
             <form class='overlay-form recipe-update' data-id='0'>
               <button class='overlay-exit'>x</button>
               <input type="text" name="recipe[name]" placeholder='Recipe Name'>
-              <input type="text" name="ingredient[name]" placeholder='Ingredient Name'>
-              <input type="text" name="ingredient[amount]" placeholder='Amount'>
-              <input type="text" name="step[title]" placeholder='Step Name'>
-              <input type="text" name="step[instructions]" placeholder='Instructions'>
-              <input type="submit" value='Publish Recipe'>
-              <h6 class='form-error'></h6>
+              <div class='ingredients'>
+                <input type="text" name="ingredient[name]" placeholder='Ingredient Name'>
+                <input type="text" name="ingredient[amount]" placeholder='Amount'>
+              </div>
+              <div class='steps'>
+                <input type="text" name="step[title]" placeholder='Step Name'>
+                <input type="text" name="step[instructions]" placeholder='Instructions'>
+              </div>
+              <input type="submit" value='Update Recipe'>
+              <h6 class='form-message'></h6>
             </form>
           </div>
           <div class='overlay-form recipe-full'>
             <h1>Recipe Name</h1>
             <h2>by person</h2>
+            <button class='logged-in recipe-favorite'>*</button>
             <div class='recipe-ingredients'>
               <h3>Ingredients:</h3>
               <ul>

@@ -7,5 +7,10 @@ const authEvents = require('./auth/events')
 // require('./example')
 
 $(() => {
-  $('.sign-up').on('submit', authEvents.onSignUp)
+  authEvents.onLoad()
+  $('.user-sign-up').on('submit', authEvents.onSignUp)
+  $('.user-sign-in').on('submit', authEvents.onSignIn)
+  $('.user-change-pw').on('submit', authEvents.onChangePassword)
+  $('.user-sign-out').on('submit', authEvents.onSignOut)
+  $('.recipe-create').on('submit', authEvents.onCreateRecipe)
 })

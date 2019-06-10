@@ -8,9 +8,16 @@ const onSignUp = event => {
   event.preventDefault()
   const formData = getFormFields(event.target)
   event.target.reset()
-  api.signUp(formData)
-    .then(ui.onSignUpSuccess)
-    .catch(ui.onSignUpFailure)
+  const signUpData = {credentials: formData['credentials']}
+  console.log(signUpData)
+  api.signUp(signUpData)
+    .then(returnData => {
+      ui.onSignUpSuccess(returnData)
+      api.createCook(formData.cook.name)
+        .then(ui.onCreateCookSuccess)
+        .catch(val => { ui.onFailure('Sign Up') })
+    })
+    .catch(val => { ui.onFailure('Sign Up') })
 }
 
 const onSignIn = event => {
@@ -18,8 +25,13 @@ const onSignIn = event => {
   const formData = getFormFields(event.target)
   event.target.reset()
   api.signIn(formData)
-    .then(ui.onSignInSuccess)
-    .catch(ui.onSignInFailure)
+    .then(returnData => {
+      ui.onSignInSuccess(returnData)
+      api.getUserData(returnData.user.id)
+        .then(ui.saveUserData)
+        .catch()
+    })
+    .catch(val => { ui.onFailure('Sign In') })
 }
 
 const onChangePassword = event => {
@@ -28,19 +40,31 @@ const onChangePassword = event => {
   event.target.reset()
   api.changePassword(formData)
     .then(ui.onChangePasswordSuccess)
-    .catch(ui.onChangePasswordFailure)
+    .catch(val => { ui.onFailure('Change Password') })
 }
 
 const onSignOut = event => {
   event.preventDefault()
   api.signOut()
     .then(ui.onSignOutSuccess)
-    .catch(ui.onSignOutFailure)
+    .catch(val => { ui.onFailure('Sign Out') })
+}
+
+const onCreateRecipe = event => {
+  event.preventDefault()
+  const formData = getFormFields(event.target)
+  console.log(formData)
+}
+
+const onLoad = event => {
+  ui.showRecipeForm()
 }
 
 module.exports = {
   onSignUp,
   onSignIn,
   onChangePassword,
-  onSignOut
+  onSignOut,
+  onCreateRecipe,
+  onLoad
 }

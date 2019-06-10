@@ -1,0 +1,14 @@
+<form class='overlay-form recipe-create'>
+  <button class='overlay-exit'>x</button>
+  <input type="text" name="recipe[name]" placeholder='Recipe Name'>
+  <div class='ingredients'>
+    {{> ingredient-form}}
+  </div>
+  <button class='ingredient-add'>+</button>
+  <div class='steps'>
+    {{> step-form}}
+  </div>
+  <button class='step-add'>+</button>
+  <input type="submit" value='Publish Recipe'>
+  <h6 class='form-message'></h6>
+</form>
