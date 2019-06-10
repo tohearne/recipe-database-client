@@ -74,12 +74,12 @@ const createIngredient = (name, amount, id) => $.ajax({
   }
 })
 
-const createStep = (title, instruction, id) => $.ajax({
+const createStep = (title, instructions, id) => $.ajax({
   url: `${config.apiUrl}/steps`,
   method: 'POST',
   data: {step: {
     title: title,
-    instruction: instruction,
+    instructions: instructions,
     recipe_id: id
   }},
   headers: {

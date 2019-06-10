@@ -10,8 +10,8 @@ const onSignUp = event => {
   event.target.reset()
   const signUpData = {credentials: formData['credentials']}
   api.signUp(signUpData)
-    .then(returnData => {
-      ui.saveUserAuth(returnData)
+    .then(responseData => {
+      ui.saveUserAuth(responseData)
       api.createCook(formData.cook.name)
         .then(ui.onCreateCookSuccess)
         .catch(val => { ui.onFailure('Sign Up') })
@@ -24,11 +24,11 @@ const onSignIn = event => {
   const formData = getFormFields(event.target)
   event.target.reset()
   api.signIn(formData)
-    .then(returnData => {
-      ui.onSignInSuccess(returnData)
-      api.getUserData(returnData.user.id)
-        .then(returnData => {
-          ui.saveUserData(returnData)
+    .then(responseData => {
+      ui.onSignInSuccess(responseData)
+      api.getUserData(responseData.user.id)
+        .then(responseData => {
+          ui.saveUserData(responseData)
           loggedIn()
         })
         .catch()

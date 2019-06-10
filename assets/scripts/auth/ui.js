@@ -17,7 +17,6 @@ const saveUserAuth = responseData => {
 }
 
 const saveUserData = responseData => {
-  console.log(responseData)
   store.userData = responseData.user
 }
 
@@ -30,7 +29,7 @@ const onFailure = (type) => {
 }
 
 const onSignInSuccess = responseData => {
-  saveUserAuth(responseData.user)
+  saveUserAuth(responseData)
   $('.form-message').text('Signed In!').removeClass('failed').fadeIn(messageFadeIn).delay(messageDurration).fadeOut(messageFadeOut)
 }
 
