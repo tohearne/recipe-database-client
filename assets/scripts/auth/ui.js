@@ -9,6 +9,9 @@ const ingredientFormTemplate = require('../templates/ingredient-form.handlebars'
 const stepFormTemplate = require('../templates/step-form.handlebars')
 const recipePreviewTemplate = require('../templates/recipe-preview.handlebars')
 const recipeFullTemplate = require('../templates/recipe-full.handlebars')
+const recipeUpdateTemplate = require('../templates/recipe-update.handlebars')
+const recipeDeleteTemplate = require('../templates/recipe-delete.handlebars')
+const buttonFavoriteTemplate = require('../templates/button-favorite.handlebars')
 
 const messageFadeIn = 300
 const messageDurration = 3000
@@ -63,6 +66,14 @@ const showRecipeForm = () => {
   $('.step-add').on('click', addNewStepLine)
 }
 
+const showRecipeUpdate = responseData => {
+  store.recipe = responseData.recipe
+  console.log(responseData)
+  $('.overlay').html(recipeUpdateTemplate({ recipe: responseData.recipe }))
+  $('.ingredient-add').on('click', addNewIngredientLine)
+  $('.step-add').on('click', addNewStepLine)
+}
+
 const addNewIngredientLine = () => {
   $('.ingredients').append(ingredientFormTemplate)
 }
@@ -73,30 +84,59 @@ const addNewStepLine = () => {
 
 const onIndexRecipesSuccess = responseData => {
   $('.main-content').html(recipePreviewTemplate({ recipes: orderRecipes(responseData.recipes) }))
-  if (store.loggedIn) {
-    loggedIn()
-  } else loggedOut()
+  setButtons()
 }
 
 const onShowRecipeSuccess = responseData => {
   $('.overlay').html(recipeFullTemplate({ recipe: responseData.recipe }))
-  if (store.loggedIn) {
-    loggedIn()
-  } else loggedOut()
+  setButtons()
 }
 
-const onCreateFavoriteSuccess = responseData => {
-  console.log(responseData)
+const showRecipeDelete = id => {
+  $('.confirmation').html(recipeDeleteTemplate({recipe: store.recipe}))
 }
 
-const closeOverlay = () => {
+const onDeleteRecipeSuccess = returnData => {
+  closeOverlay()
+  closeConfirmation()
+}
+
+const closeOverlay = event => {
   $('.overlay').empty()
 }
 
+const closeConfirmation = event => {
+  console.log('closing')
+  $('.confirmation').empty()
+}
+
 const orderRecipes = recipes => {
+  if (store.filterType === 'favorites') recipes = recipes.filter(recipe => recipe.users.some(user => user.id === store.userAuth.id))
+  else if (store.filterType === 'user') recipes = recipes.filter(recipe => recipe.cook.id === store.userData.cook.id)
+
   if (store.sortType === 'popular') {
     return recipes.sort((x, y) => (x.favorites.length > y.favorites.length) ? -1 : 1)
   } return recipes.reverse()
+}
+
+const setButtons = () => {
+  if (store.loggedIn) {
+    loggedIn()
+    const buttons = $('.fav-edit-button')
+    for (let i = 0; i < buttons.length; i++) {
+      const recipeId = buttons[i].getAttribute('data-id')
+      if (store.userData.recipes.some(recipe => `${recipe.id}` === recipeId)) {
+        buttons[i].classList.add('show-recipe-update')
+        buttons[i].innerHTML = 'Edit'
+      } else if (store.userData.favorites.some(fav => `${fav.recipe_id}` === recipeId)) {
+        buttons[i].classList.add('recipe-unfavorite')
+        buttons[i].innerHTML = 'Favorited'
+        buttons[i].setAttribute('data-favid', `${store.userData.favorites.find(fav => `${fav.recipe_id}` === recipeId).id}`)
+      } else {
+        buttons[i].innerHTML = buttonFavoriteTemplate({id: recipeId})
+      }
+    }
+  } else loggedOut()
 }
 
 const loggedIn = () => {
@@ -107,6 +147,7 @@ const loggedIn = () => {
 
 const loggedOut = () => {
   store.loggedIn = false
+  store.filterType = ''
   $('.logged-in').addClass('disable')
   $('.logged-out').removeClass('disable')
 }
@@ -123,10 +164,14 @@ module.exports = {
   showSignIn,
   showChangePassword,
   showRecipeForm,
+  showRecipeUpdate,
   onIndexRecipesSuccess,
   onShowRecipeSuccess,
-  onCreateFavoriteSuccess,
+  showRecipeDelete,
+  onDeleteRecipeSuccess,
+  setButtons,
   closeOverlay,
+  closeConfirmation,
   loggedIn,
   loggedOut
 }

@@ -27,9 +27,10 @@ const onSignIn = event => {
   api.signIn(formData)
     .then(responseData => {
       ui.onSignInSuccess(responseData)
-      api.getUserData(responseData.user.id)
-        .then(responseData => {
-          ui.saveUserData(responseData)
+      api.getUserData()
+        .then(returnData => {
+          ui.saveUserData(returnData)
+          onIndexRecipes()
         })
         .catch()
     })
@@ -48,7 +49,10 @@ const onChangePassword = event => {
 const onSignOut = event => {
   event.preventDefault()
   api.signOut()
-    .then(ui.onSignOutSuccess)
+    .then(responseData => {
+      ui.onSignOutSuccess(responseData)
+      onIndexRecipes()
+    })
     .catch()
 }
 
@@ -64,13 +68,42 @@ const onCreateRecipe = event => {
       formData['step-titles'].forEach((title, index) => {
         api.createStep(title, formData['step-instructions'][index], responseData.recipe.id)
       })
-      api.getUserData(store.userAuth.id)
-        .then(returnData => {
-          ui.saveUserData(returnData)
-        })
+      api.getUserData()
+        .then(ui.saveUserData)
         .catch()
     })
     .catch(val => { ui.onFailure('Create Recipe') })
+}
+
+const onUpdateRecipe = event => {
+  event.preventDefault()
+  const formData = getFormFields(event.target)
+  api.updateRecipe(store.recipe.id, formData.recipe.name)
+    .then(responseData => {
+      store.recipe.ingredients.forEach((ingredient, index) => {
+        api.updateIngredient(ingredient.id, formData['ingredient-names'][index], formData['ingredient-amounts'][index])
+      })
+      store.recipe.steps.forEach((step, index) => {
+        api.updateStep(step.id, formData['step-titles'][index], formData['step-instructions'][index])
+      })
+      api.getUserData()
+        .then(ui.saveUserData)
+        .catch()
+    })
+    .catch(val => { ui.onFailure('Update Recipe') })
+}
+
+const onDeleteRecipe = event => {
+  api.showRecipe(store.recipe.id)
+    .then(() => {
+      console.log(store.recipe.id)
+      api.deleteRecipe(store.recipe.id)
+        .then(() => {
+          ui.onDeleteRecipeSuccess()
+          onIndexRecipes()
+        })
+    })
+    .catch()
 }
 
 const onIndexRecipes = () => {
@@ -88,13 +121,34 @@ const onShowRecipe = event => {
 const onCreateFavorite = event => {
   api.createFavorite($(event.target).data('id'))
     .then(responseData => {
-      ui.onCreateFavoriteSuccess(responseData)
-      api.getUserData(store.userAuth.id)
+      api.getUserData()
         .then(returnData => {
           ui.saveUserData(returnData)
+          ui.setButtons()
+          onIndexRecipes()
         })
         .catch()
     })
+    .catch()
+}
+
+const onDeleteFavorite = event => {
+  api.deleteFavorite($(event.target).data('favid'))
+    .then(responseData => {
+      api.getUserData()
+        .then(returnData => {
+          ui.saveUserData(returnData)
+          ui.setButtons()
+          onIndexRecipes()
+        })
+        .catch()
+    })
+    .catch()
+}
+
+const onShowRecipeUpdate = event => {
+  api.showRecipe($(event.target).data('id'))
+    .then(ui.showRecipeUpdate)
     .catch()
 }
 
@@ -103,14 +157,28 @@ const onSetOrder = sortType => {
   onIndexRecipes()
 }
 
+const onSetFilter = filterType => {
+  api.getUserData()
+    .then(returnData => {
+      ui.saveUserData(returnData)
+      store.filterType = filterType
+      onIndexRecipes()
+    })
+}
+
 module.exports = {
   onSignUp,
   onSignIn,
   onChangePassword,
   onSignOut,
   onCreateRecipe,
+  onUpdateRecipe,
+  onDeleteRecipe,
   onIndexRecipes,
   onShowRecipe,
   onCreateFavorite,
-  onSetOrder
+  onDeleteFavorite,
+  onShowRecipeUpdate,
+  onSetOrder,
+  onSetFilter
 }

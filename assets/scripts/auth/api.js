@@ -87,6 +87,49 @@ const createStep = (title, instructions, id) => $.ajax({
   }
 })
 
+const updateRecipe = (id, name) => $.ajax({
+  url: `${config.apiUrl}/recipes/${id}`,
+  method: 'PATCH',
+  data: {recipe: {
+    name: name
+  }},
+  headers: {
+    Authorization: `Token ${store.userAuth.token}`
+  }
+})
+
+const updateIngredient = (id, name, amount) => $.ajax({
+  url: `${config.apiUrl}/ingredients/${id}`,
+  method: 'PATCH',
+  data: {ingredient: {
+    name: name,
+    amount: amount
+  }},
+  headers: {
+    Authorization: `Token ${store.userAuth.token}`
+  }
+})
+
+const updateStep = (id, title, instructions) => $.ajax({
+  url: `${config.apiUrl}/steps/${id}`,
+  method: 'PATCH',
+  data: {step: {
+    title: title,
+    instructions: instructions
+  }},
+  headers: {
+    Authorization: `Token ${store.userAuth.token}`
+  }
+})
+
+const deleteRecipe = id => $.ajax({
+  url: `${config.apiUrl}/recipes/${id}`,
+  method: 'DELETE',
+  headers: {
+    Authorization: `Token ${store.userAuth.token}`
+  }
+})
+
 const indexRecipes = () => $.ajax({
   url: `${config.apiUrl}/recipes`
 })
@@ -107,6 +150,18 @@ const createFavorite = id => $.ajax({
   }
 })
 
+const deleteFavorite = id => $.ajax({
+  url: `${config.apiUrl}/favorites/${id}`,
+  method: 'DELETE',
+  headers: {
+    Authorization: `Token ${store.userAuth.token}`
+  }
+})
+
+const showCook = () => $.ajax({
+  url: `${config.apiUrl}/cooks/${store.userData.cook.id}`
+})
+
 module.exports = {
   signUp,
   createCook,
@@ -117,7 +172,13 @@ module.exports = {
   createRecipe,
   createIngredient,
   createStep,
+  updateRecipe,
+  updateIngredient,
+  updateStep,
+  deleteRecipe,
   indexRecipes,
   showRecipe,
-  createFavorite
+  createFavorite,
+  deleteFavorite,
+  showCook
 }
