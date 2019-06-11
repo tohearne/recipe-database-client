@@ -2,6 +2,7 @@
 
 const api = require('./api')
 const ui = require('./ui')
+const store = require('../store')
 const getFormFields = require('../../../lib/get-form-fields')
 
 const onSignUp = event => {
@@ -29,7 +30,6 @@ const onSignIn = event => {
       api.getUserData(responseData.user.id)
         .then(responseData => {
           ui.saveUserData(responseData)
-          loggedIn()
         })
         .catch()
     })
@@ -49,7 +49,7 @@ const onSignOut = event => {
   event.preventDefault()
   api.signOut()
     .then(ui.onSignOutSuccess)
-    .catch(val => { ui.onFailure('Sign Out') })
+    .catch()
 }
 
 const onCreateRecipe = event => {
@@ -64,14 +64,43 @@ const onCreateRecipe = event => {
       formData['step-titles'].forEach((title, index) => {
         api.createStep(title, formData['step-instructions'][index], responseData.recipe.id)
       })
+      api.getUserData(store.userAuth.id)
+        .then(returnData => {
+          ui.saveUserData(returnData)
+        })
+        .catch()
     })
     .catch(val => { ui.onFailure('Create Recipe') })
 }
 
-const loggedOut = () => {
+const onIndexRecipes = () => {
+  api.indexRecipes()
+    .then(ui.onIndexRecipesSuccess)
+    .catch()
 }
 
-const loggedIn = () => {
+const onShowRecipe = event => {
+  api.showRecipe($(event.target).data('id'))
+    .then(ui.onShowRecipeSuccess)
+    .catch()
+}
+
+const onCreateFavorite = event => {
+  api.createFavorite($(event.target).data('id'))
+    .then(responseData => {
+      ui.onCreateFavoriteSuccess(responseData)
+      api.getUserData(store.userAuth.id)
+        .then(returnData => {
+          ui.saveUserData(returnData)
+        })
+        .catch()
+    })
+    .catch()
+}
+
+const onSetOrder = sortType => {
+  store.sortType = sortType
+  onIndexRecipes()
 }
 
 module.exports = {
@@ -80,5 +109,8 @@ module.exports = {
   onChangePassword,
   onSignOut,
   onCreateRecipe,
-  loggedOut
+  onIndexRecipes,
+  onShowRecipe,
+  onCreateFavorite,
+  onSetOrder
 }

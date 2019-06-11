@@ -8,7 +8,9 @@ const authUi = require('./auth/ui')
 // require('./example')
 
 $(() => {
-  authEvents.loggedOut()
+  authUi.loggedOut()
+  authEvents.onSetOrder('new')
+  authEvents.onIndexRecipes()
   $('.user-auth').on('click', '.show-sign-up', authUi.showSignUp)
   $('.user-auth').on('click', '.show-sign-in', authUi.showSignIn)
   $('.user-auth').on('click', '.show-change-pw', authUi.showChangePassword)
@@ -19,4 +21,13 @@ $(() => {
   $('.overlay').on('submit', '.user-sign-in', authEvents.onSignIn)
   $('.overlay').on('submit', '.user-change-pw', authEvents.onChangePassword)
   $('.overlay').on('submit', '.recipe-create', authEvents.onCreateRecipe)
+  $('.filter-all').on('click', authEvents.onIndexRecipes)
+  $('.main-content').on('click', '.recipe-preview-name', authEvents.onShowRecipe)
+  $('.main-content').on('click', '.recipe-favorite', authEvents.onCreateFavorite)
+  $('.filter-new').on('click', () => {
+    authEvents.onSetOrder('new')
+  })
+  $('.filter-popular').on('click', () => {
+    authEvents.onSetOrder('popular')
+  })
 })

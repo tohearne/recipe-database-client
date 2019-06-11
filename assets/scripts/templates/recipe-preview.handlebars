@@ -1,0 +1,7 @@
+{{#each recipes as |recipe|}}
+  <section class='recipe-preview'>
+    <button class='logged-in recipe-favorite' data-id='{{recipe.id}}'>Favorite</button>
+    <h4 class='recipe-preview-name' data-id='{{recipe.id}}'>{{recipe.name}}</h4>
+    <h6>By: {{recipe.cook.name}}</h6>
+  </section>
+{{/each}}

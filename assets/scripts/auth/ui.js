@@ -7,6 +7,8 @@ const changePasswordFormTemplate = require('../templates/change-password-form.ha
 const recipeFormTemplate = require('../templates/recipe-form.handlebars')
 const ingredientFormTemplate = require('../templates/ingredient-form.handlebars')
 const stepFormTemplate = require('../templates/step-form.handlebars')
+const recipePreviewTemplate = require('../templates/recipe-preview.handlebars')
+const recipeFullTemplate = require('../templates/recipe-full.handlebars')
 
 const messageFadeIn = 300
 const messageDurration = 3000
@@ -31,6 +33,7 @@ const onFailure = (type) => {
 const onSignInSuccess = responseData => {
   saveUserAuth(responseData)
   $('.form-message').text('Signed In!').removeClass('failed').fadeIn(messageFadeIn).delay(messageDurration).fadeOut(messageFadeOut)
+  loggedIn()
 }
 
 const onChangePasswordSuccess = () => {
@@ -39,6 +42,7 @@ const onChangePasswordSuccess = () => {
 
 const onSignOutSuccess = () => {
   $('.form-message').text('Signed Out!').removeClass('failed').fadeIn(messageFadeIn).delay(messageDurration).fadeOut(messageFadeOut)
+  loggedOut()
 }
 
 const showSignUp = () => {
@@ -67,8 +71,44 @@ const addNewStepLine = () => {
   $('.steps').append(stepFormTemplate)
 }
 
+const onIndexRecipesSuccess = responseData => {
+  $('.main-content').html(recipePreviewTemplate({ recipes: orderRecipes(responseData.recipes) }))
+  if (store.loggedIn) {
+    loggedIn()
+  } else loggedOut()
+}
+
+const onShowRecipeSuccess = responseData => {
+  $('.overlay').html(recipeFullTemplate({ recipe: responseData.recipe }))
+  if (store.loggedIn) {
+    loggedIn()
+  } else loggedOut()
+}
+
+const onCreateFavoriteSuccess = responseData => {
+  console.log(responseData)
+}
+
 const closeOverlay = () => {
   $('.overlay').empty()
+}
+
+const orderRecipes = recipes => {
+  if (store.sortType === 'popular') {
+    return recipes.sort((x, y) => (x.favorites.length > y.favorites.length) ? -1 : 1)
+  } return recipes.reverse()
+}
+
+const loggedIn = () => {
+  store.loggedIn = true
+  $('.logged-in').removeClass('disable')
+  $('.logged-out').addClass('disable')
+}
+
+const loggedOut = () => {
+  store.loggedIn = false
+  $('.logged-in').addClass('disable')
+  $('.logged-out').removeClass('disable')
 }
 
 module.exports = {
@@ -83,5 +123,10 @@ module.exports = {
   showSignIn,
   showChangePassword,
   showRecipeForm,
-  closeOverlay
+  onIndexRecipesSuccess,
+  onShowRecipeSuccess,
+  onCreateFavoriteSuccess,
+  closeOverlay,
+  loggedIn,
+  loggedOut
 }

@@ -87,6 +87,26 @@ const createStep = (title, instructions, id) => $.ajax({
   }
 })
 
+const indexRecipes = () => $.ajax({
+  url: `${config.apiUrl}/recipes`
+})
+
+const showRecipe = id => $.ajax({
+  url: `${config.apiUrl}/recipes/${id}`
+})
+
+const createFavorite = id => $.ajax({
+  url: `${config.apiUrl}/favorites`,
+  method: 'POST',
+  data: {favorite: {
+    user_id: store.userAuth.id,
+    recipe_id: id
+  }},
+  headers: {
+    Authorization: `Token ${store.userAuth.token}`
+  }
+})
+
 module.exports = {
   signUp,
   createCook,
@@ -96,5 +116,8 @@ module.exports = {
   signOut,
   createRecipe,
   createIngredient,
-  createStep
+  createStep,
+  indexRecipes,
+  showRecipe,
+  createFavorite
 }
