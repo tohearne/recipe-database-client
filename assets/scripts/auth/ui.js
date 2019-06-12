@@ -28,7 +28,7 @@ const saveUserData = responseData => {
 }
 
 const onCreateCookSuccess = responseData => {
-  $('.login-message').text('Signed Up!').removeClass('failed').fadeIn(messageFadeIn).delay(messageDurration).fadeOut(messageFadeOut)
+  $('.form-message').text('Signed Up!').removeClass('failed').fadeIn(messageFadeIn).delay(messageDurration).fadeOut(messageFadeOut)
 }
 
 const onFailure = (type) => {
@@ -36,7 +36,6 @@ const onFailure = (type) => {
 }
 
 const onSignInSuccess = responseData => {
-  console.log(responseData)
   saveUserAuth(responseData)
   $('.login-message').text(`Welcome ${store.userAuth.cook.name}`).removeClass('failed').fadeIn(messageFadeIn).delay(messageDurration).fadeOut(messageFadeOut)
   loggedIn()
@@ -72,7 +71,6 @@ const showRecipeForm = () => {
 
 const showRecipeUpdate = responseData => {
   store.recipe = responseData.recipe
-  console.log(responseData)
   $('.overlay').html(recipeUpdateTemplate({ recipe: responseData.recipe }))
   $('.ingredient-add').on('click', addNewIngredientLine)
   $('.step-add').on('click', addNewStepLine)
@@ -110,17 +108,16 @@ const closeOverlay = event => {
 }
 
 const closeConfirmation = event => {
-  console.log('closing')
   $('.confirmation').empty()
 }
 
 const orderRecipes = recipes => {
   if (store.filterType === 'favorites') recipes = recipes.filter(recipe => recipe.users.some(user => user.id === store.userAuth.id))
-  else if (store.filterType === 'user') recipes = recipes.filter(recipe => recipe.cook.id === store.userData.cook.id)
-
+  else if (store.filterType === 'user') recipes = recipes.filter(recipe => recipe.cook.id === store.userAuth.cook.id)
+  recipes = recipes.reverse()
   if (store.sortType === 'popular') {
     recipes = recipes.sort((x, y) => (x.favorites.length > y.favorites.length) ? -1 : 1)
-  } else recipes = recipes.reverse()
+  }
   if (store.searchStr) recipes = recipes.filter(recipe => recipe.name.toUpperCase().includes(store.searchStr.toUpperCase()))
   return recipes
 }

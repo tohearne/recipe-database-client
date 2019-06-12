@@ -69,7 +69,10 @@ const onCreateRecipe = event => {
         api.createStep(title, formData['step-instructions'][index], responseData.recipe.id)
       })
       api.getUserData()
-        .then(ui.saveUserData)
+        .then(returnData => {
+          ui.saveUserData(returnData)
+          onIndexRecipes()
+        })
         .catch()
     })
     .catch(val => { ui.onFailure('Create Recipe') })
@@ -96,7 +99,6 @@ const onUpdateRecipe = event => {
 const onDeleteRecipe = event => {
   api.showRecipe(store.recipe.id)
     .then(() => {
-      console.log(store.recipe.id)
       api.deleteRecipe(store.recipe.id)
         .then(() => {
           ui.onDeleteRecipeSuccess()
@@ -119,6 +121,7 @@ const onShowRecipe = event => {
 }
 
 const onCreateFavorite = event => {
+  console.log('stuff')
   api.createFavorite($(event.target).data('id'))
     .then(responseData => {
       api.getUserData()
@@ -158,12 +161,8 @@ const onSetOrder = sortType => {
 }
 
 const onSetFilter = filterType => {
-  api.getUserData()
-    .then(returnData => {
-      ui.saveUserData(returnData)
-      store.filterType = filterType
-      onIndexRecipes()
-    })
+  store.filterType = filterType
+  onIndexRecipes()
 }
 
 const onSearch = event => {

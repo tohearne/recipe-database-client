@@ -19,7 +19,8 @@ nav {
   margin: 1rem;
 }
 
-.main-content {
+.main-content,
+.user-auth {
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-start;
@@ -44,8 +45,10 @@ nav {
   background-color: $background-light;
   border-radius: 5px;
   display: inline-block;
-  margin: 2rem;
+  height: 10rem;
+  margin: 1.75rem;
   padding: 1rem 2rem;
+  width: 15rem;
 }
 
 .preview-buttons {
@@ -89,6 +92,10 @@ nav {
   position: fixed;
   top: 0;
   width: 100%;
+}
+
+.login-message {
+  margin-right: 1rem;
 }
 
 .form-message,

@@ -8,7 +8,7 @@
         <button class='overlay-exit' type='button'>x</button>
       </div>
     </div>
-    <h2>By: {{recipe.cook.name}}</h2>
+    <h4>By: {{recipe.cook.name}}</h4>
     <div class='recipe-ingredients'>
       <h3>Ingredients:</h3>
       <ul>
@@ -21,7 +21,7 @@
       <h3>Steps:</h3>
       <ul>
         {{#each recipe.steps as |step|}}
-        <li>{{step.title}}{{#if step.title}}{{#if step.instructions}}:<br>{{/if}}{{/if}}{{step.instructions}}</li>
+        <li><b>{{step.title}}</b>{{#if step.title}}{{#if step.instructions}}:<br>{{/if}}{{/if}}{{step.instructions}}</li>
         {{/each}}
       </ul>
     </div>
