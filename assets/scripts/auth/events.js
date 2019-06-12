@@ -64,11 +64,9 @@ const onCreateRecipe = event => {
     .then(async function (responseData) {
       for (let i = 0; i < formData['ingredient-names'].length; i++) {
         await api.createIngredient(formData['ingredient-names'][i], formData['ingredient-amounts'][i], responseData.recipe.id)
-          .then(console.log)
       }
       for (let i = 0; i < formData['step-titles'].length; i++) {
         api.createStep(formData['step-titles'][i], formData['step-instructions'][i], responseData.recipe.id)
-          .then(console.log)
       }
       api.getUserData()
         .then(returnData => {
