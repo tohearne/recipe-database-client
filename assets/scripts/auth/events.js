@@ -71,6 +71,7 @@ const onCreateRecipe = event => {
       api.getUserData()
         .then(returnData => {
           ui.saveUserData(returnData)
+          ui.onCreateRecipeSuccess()
           onIndexRecipes()
         })
         .catch()
@@ -90,7 +91,11 @@ const onUpdateRecipe = event => {
         api.updateStep(step.id, formData['step-titles'][index], formData['step-instructions'][index])
       })
       api.getUserData()
-        .then(ui.saveUserData)
+        .then(returnData => {
+          ui.saveUserData(returnData)
+          ui.onUpdateRecipeSuccess()
+          onIndexRecipes()
+        })
         .catch()
     })
     .catch(val => { ui.onFailure('Update Recipe') })

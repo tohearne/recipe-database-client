@@ -51,6 +51,14 @@ const onSignOutSuccess = () => {
   loggedOut()
 }
 
+const onCreateRecipeSuccess = responseData => {
+  $('.form-message').text('Recipe Created!').removeClass('failed').fadeIn(messageFadeIn).delay(messageDurration).fadeOut(messageFadeOut)
+}
+
+const onUpdateRecipeSuccess = responseData => {
+  $('.form-message').text('Recipe Updated!').removeClass('failed').fadeIn(messageFadeIn).delay(messageDurration).fadeOut(messageFadeOut)
+}
+
 const showSignUp = () => {
   $('.overlay').html(signUpFormTemplate)
 }
@@ -164,6 +172,8 @@ module.exports = {
   onSignInSuccess,
   onChangePasswordSuccess,
   onSignOutSuccess,
+  onCreateRecipeSuccess,
+  onUpdateRecipeSuccess,
   showSignUp,
   showSignIn,
   showChangePassword,
