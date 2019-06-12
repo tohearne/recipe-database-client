@@ -14,6 +14,7 @@ const recipeDeleteTemplate = require('../templates/recipe-delete.handlebars')
 const buttonFavoriteTemplate = require('../templates/button-favorite.handlebars')
 const buttonUnfavoriteTemplate = require('../templates/button-unfavorite.handlebars')
 const buttonEditTemplate = require('../templates/button-edit.handlebars')
+const noContentTemplate = require('../templates/no-content.handlebars')
 
 const messageFadeIn = 300
 const messageDurration = 3000
@@ -95,8 +96,13 @@ const addNewStepLine = () => {
 }
 
 const onIndexRecipesSuccess = responseData => {
-  $('.main-content').html(recipePreviewTemplate({ recipes: orderRecipes(responseData.recipes) }))
-  setButtons()
+  const recipes = orderRecipes(responseData.recipes)
+  console.log(recipes)
+  if (recipes.length === 0) $('.main-content').html(noContentTemplate())
+  else {
+    $('.main-content').html(recipePreviewTemplate({ recipes: recipes }))
+    setButtons()
+  }
 }
 
 const onShowRecipeSuccess = responseData => {
