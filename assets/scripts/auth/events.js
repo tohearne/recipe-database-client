@@ -128,7 +128,6 @@ const onShowRecipe = event => {
 }
 
 const onCreateFavorite = event => {
-  console.log('stuff')
   api.createFavorite($(event.target).data('id'))
     .then(responseData => {
       api.getUserData()
