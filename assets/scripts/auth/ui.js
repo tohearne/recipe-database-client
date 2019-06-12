@@ -12,6 +12,8 @@ const recipeFullTemplate = require('../templates/recipe-full.handlebars')
 const recipeUpdateTemplate = require('../templates/recipe-update.handlebars')
 const recipeDeleteTemplate = require('../templates/recipe-delete.handlebars')
 const buttonFavoriteTemplate = require('../templates/button-favorite.handlebars')
+const buttonUnfavoriteTemplate = require('../templates/button-unfavorite.handlebars')
+const buttonEditTemplate = require('../templates/button-edit.handlebars')
 
 const messageFadeIn = 300
 const messageDurration = 3000
@@ -115,8 +117,10 @@ const orderRecipes = recipes => {
   else if (store.filterType === 'user') recipes = recipes.filter(recipe => recipe.cook.id === store.userData.cook.id)
 
   if (store.sortType === 'popular') {
-    return recipes.sort((x, y) => (x.favorites.length > y.favorites.length) ? -1 : 1)
-  } return recipes.reverse()
+    recipes = recipes.sort((x, y) => (x.favorites.length > y.favorites.length) ? -1 : 1)
+  } else recipes = recipes.reverse()
+  if (store.searchStr) recipes = recipes.filter(recipe => recipe.name.toUpperCase().includes(store.searchStr.toUpperCase()))
+  return recipes
 }
 
 const setButtons = () => {
@@ -126,12 +130,13 @@ const setButtons = () => {
     for (let i = 0; i < buttons.length; i++) {
       const recipeId = buttons[i].getAttribute('data-id')
       if (store.userData.recipes.some(recipe => `${recipe.id}` === recipeId)) {
-        buttons[i].classList.add('show-recipe-update')
-        buttons[i].innerHTML = 'Edit'
+        buttons[i].innerHTML = buttonEditTemplate({id: recipeId})
       } else if (store.userData.favorites.some(fav => `${fav.recipe_id}` === recipeId)) {
-        buttons[i].classList.add('recipe-unfavorite')
-        buttons[i].innerHTML = 'Favorited'
-        buttons[i].setAttribute('data-favid', `${store.userData.favorites.find(fav => `${fav.recipe_id}` === recipeId).id}`)
+        buttons[i].innerHTML = buttonUnfavoriteTemplate({ button: {
+          id: recipeId,
+          favid: `${store.userData.favorites.find(fav => `${fav.recipe_id}` === recipeId).id}`
+        }
+        })
       } else {
         buttons[i].innerHTML = buttonFavoriteTemplate({id: recipeId})
       }

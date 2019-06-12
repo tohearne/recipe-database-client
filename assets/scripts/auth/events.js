@@ -166,6 +166,12 @@ const onSetFilter = filterType => {
     })
 }
 
+const onSearch = event => {
+  event.preventDefault()
+  store.searchStr = getFormFields(event.target).search.text
+  onIndexRecipes()
+}
+
 module.exports = {
   onSignUp,
   onSignIn,
@@ -180,5 +186,6 @@ module.exports = {
   onDeleteFavorite,
   onShowRecipeUpdate,
   onSetOrder,
-  onSetFilter
+  onSetFilter,
+  onSearch
 }

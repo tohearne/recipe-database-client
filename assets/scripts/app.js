@@ -10,6 +10,7 @@ const authUi = require('./auth/ui')
 $(() => {
   authUi.loggedOut()
   authEvents.onSetOrder('new')
+  $('.search-bar').on('submit', authEvents.onSearch)
   $('.user-auth').on('click', '.show-sign-up', authUi.showSignUp)
   $('.user-auth').on('click', '.show-sign-in', authUi.showSignIn)
   $('.user-auth').on('click', '.show-change-pw', authUi.showChangePassword)
