@@ -97,7 +97,6 @@ const addNewStepLine = () => {
 
 const onIndexRecipesSuccess = responseData => {
   const recipes = orderRecipes(responseData.recipes)
-  console.log(recipes)
   if (recipes.length === 0) $('.main-content').html(noContentTemplate())
   else {
     $('.main-content').html(recipePreviewTemplate({ recipes: recipes }))
