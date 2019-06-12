@@ -1,14 +1,14 @@
 <div class='overlay-background'>
   <div class='overlay-form recipe-full'>
-    <div class='recipe-header'>
+    <div class='form-header flex-space'>
       <h1>{{recipe.name}}</h1>
-      <div>
+      <div class='overlay-buttons'>
         <span>Favorites: {{recipe.favorites.length}}</span>
         <span class='fav-edit-button' data-id='{{recipe.id}}'></span>
         <button class='overlay-exit' type='button'>x</button>
       </div>
-      <h2>By: {{recipe.cook.name}}</h2>
     </div>
+    <h2>By: {{recipe.cook.name}}</h2>
     <div class='recipe-ingredients'>
       <h3>Ingredients:</h3>
       <ul>
@@ -21,7 +21,7 @@
       <h3>Steps:</h3>
       <ul>
         {{#each recipe.steps as |step|}}
-        <li>{{step.title}}{{#if step.title}}{{#if step.instructions}}: {{/if}}{{/if}}{{step.instructions}}</li>
+        <li>{{step.title}}{{#if step.title}}{{#if step.instructions}}:<br>{{/if}}{{/if}}{{step.instructions}}</li>
         {{/each}}
       </ul>
     </div>

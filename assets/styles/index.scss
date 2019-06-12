@@ -1,4 +1,104 @@
 @import '~bootstrap/scss/bootstrap';
+@import './themes';
+
+body {
+  background-color: $background-medium;
+}
+
+header {
+  align-items: center;
+  background-color: $background-light;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 1rem;
+}
+
+nav {
+  display: flex;
+  justify-content: space-between;
+  margin: 1rem;
+}
+
+.main-content {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+}
+
+.flex-space {
+  display: flex;
+  justify-content: space-between;
+}
+
+.form-header {
+  margin-bottom: .5rem;
+}
+
+.form-footer {
+  display: flex;
+  justify-content: space-around;
+  margin-top: .5rem;
+}
+
+.recipe-preview {
+  background-color: $background-light;
+  border-radius: 5px;
+  display: inline-block;
+  margin: 2rem;
+  padding: 1rem 2rem;
+}
+
+.preview-buttons {
+  margin-left: 1rem;
+}
+
+.overlay-form {
+  background-color: $background-light;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  margin: 2rem;
+  padding: 1rem 2rem;
+}
+
+.overlay-buttons {
+  margin-left: 3rem;
+}
+
+.form-button {
+  margin: .5rem 0;
+}
+
+.overlay-background {
+  align-items: center;
+  background-color: $overlay-dark;
+  display: flex;
+  height: 100%;
+  justify-content: center;
+  position: fixed;
+  top: 0;
+  width: 100%;
+}
+
+.confirmation-background {
+  align-items: center;
+  background-color: $overlay-dark;
+  display: flex;
+  height: 100%;
+  justify-content: center;
+  position: fixed;
+  top: 0;
+  width: 100%;
+}
+
+.form-message,
+.login-message {
+  color: $text-success;
+}
+
+.failed {
+  color: $text-error;
+}
 
 .disable {
   display: none;

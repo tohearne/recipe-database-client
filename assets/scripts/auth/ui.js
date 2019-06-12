@@ -36,9 +36,11 @@ const onFailure = (type) => {
 }
 
 const onSignInSuccess = responseData => {
+  console.log(responseData)
   saveUserAuth(responseData)
-  $('.form-message').text('Signed In!').removeClass('failed').fadeIn(messageFadeIn).delay(messageDurration).fadeOut(messageFadeOut)
+  $('.login-message').text(`Welcome ${store.userAuth.cook.name}`).removeClass('failed').fadeIn(messageFadeIn).delay(messageDurration).fadeOut(messageFadeOut)
   loggedIn()
+  closeOverlay()
 }
 
 const onChangePasswordSuccess = () => {
@@ -46,7 +48,7 @@ const onChangePasswordSuccess = () => {
 }
 
 const onSignOutSuccess = () => {
-  $('.form-message').text('Signed Out!').removeClass('failed').fadeIn(messageFadeIn).delay(messageDurration).fadeOut(messageFadeOut)
+  $('.login-message').text('Signed Out!').removeClass('failed').fadeIn(messageFadeIn).delay(messageDurration).fadeOut(messageFadeOut)
   loggedOut()
 }
 

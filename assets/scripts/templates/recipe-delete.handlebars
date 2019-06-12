@@ -1,9 +1,11 @@
-<div class='confirmation-background'>
-  <div class='confirmation-form'>
-    <div class='confirmation-header'>
+<div class='overlay-background'>
+  <div class='overlay-form'>
+    <div class='form-header'>
       <h4>Are you sure you want to delete {{recipe.name}}?</h4>
     </div>
-    <button class='recipe-delete' type='button' data-id='{{recipe.id}}'>Yes</button>
-    <button class='confirmation-exit' type='button'>No</button>
+    <div class='form-footer'>
+      <button class='recipe-delete' type='button' data-id='{{recipe.id}}'>Yes</button>
+      <button class='confirmation-exit' type='button'>No</button>
+    </div>
   </div>
 </div>

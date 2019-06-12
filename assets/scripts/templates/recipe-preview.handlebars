@@ -1,10 +1,11 @@
 {{#each recipes as |recipe|}}
   <section class='recipe-preview'>
-    <h4 class='recipe-preview-name' data-id='{{recipe.id}}'>{{recipe.name}}</h4>
-    <div>
-      <span>Favorites: {{recipe.favorites.length}}</span>
-      <span class='logged-in fav-edit-button' data-id='{{recipe.id}}'></span>
+    <div class='form-header flex-space'>
+      <h4 class='recipe-preview-name' data-id='{{recipe.id}}'>{{recipe.name}}</h4>
+      <div class='preview-buttons'>
+        <span class='logged-in fav-edit-button' data-id='{{recipe.id}}'></span>
+      </div>
     </div>
-    <h6>By: {{recipe.cook.name}}</h6>
+    <h6>By: {{recipe.cook.name}} <span>|| Favorites: {{recipe.favorites.length}}</span></h6>
   </section>
 {{/each}}

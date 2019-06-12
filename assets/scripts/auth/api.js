@@ -54,7 +54,7 @@ const createRecipe = name => $.ajax({
   method: 'POST',
   data: {recipe: {
     name: name,
-    cook_id: store.userData.cook.id
+    cook_id: store.userAuth.cook.id
   }},
   headers: {
     Authorization: `Token ${store.userAuth.token}`
@@ -159,7 +159,7 @@ const deleteFavorite = id => $.ajax({
 })
 
 const showCook = () => $.ajax({
-  url: `${config.apiUrl}/cooks/${store.userData.cook.id}`
+  url: `${config.apiUrl}/cooks/${store.userAuth.cook.id}`
 })
 
 module.exports = {
