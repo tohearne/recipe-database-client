@@ -6,7 +6,7 @@
         <span class='logged-in fav-edit-button' data-id='{{recipe.id}}'></span>
       </div>
     </div>
-    <h6 class='recipe-show'>By: {{recipe.cook.name}}</h6>
-    <h6 class='recipe-show'>Favorites: {{recipe.favorites.length}}</h6>
+    <h6 class='recipe-show' data-id='{{recipe.id}}'>By: {{recipe.cook.name}}</h6>
+    <h6 class='recipe-show' data-id='{{recipe.id}}'>Favorites: {{recipe.favorites.length}}</h6>
   </section>
 {{/each}}
