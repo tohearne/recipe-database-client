@@ -78,6 +78,8 @@ const showRecipeForm = () => {
 }
 
 const showRecipeUpdate = responseData => {
+  responseData.recipe.ingredients = responseData.recipe.ingredients.sort((x, y) => (x.id > y.id) ? 1 : -1)
+  responseData.recipe.steps = responseData.recipe.steps.sort((x, y) => (x.id > y.id) ? 1 : -1)
   store.recipe = responseData.recipe
   $('.overlay').html(recipeUpdateTemplate({ recipe: responseData.recipe }))
   $('.ingredient-add').on('click', addNewIngredientLine)
