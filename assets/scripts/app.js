@@ -19,7 +19,7 @@ $(() => {
   $('main').on('click', '.show-recipe-update', authEvents.onShowRecipeUpdate)
   $('main').on('click', '.recipe-favorite', authEvents.onCreateFavorite)
   $('main').on('click', '.recipe-unfavorite', authEvents.onDeleteFavorite)
-  $('.main-content').on('click', '.recipe-preview-name', authEvents.onShowRecipe)
+  $('.main-content').on('click', '.recipe-show', authEvents.onShowRecipe)
   $('.overlay').on('click', '.overlay-exit', authUi.closeOverlay)
   $('.overlay').on('submit', '.user-sign-up', authEvents.onSignUp)
   $('.overlay').on('submit', '.user-sign-in', authEvents.onSignIn)
