@@ -134,7 +134,6 @@ const onCreateFavorite = event => {
       api.getUserData()
         .then(returnData => {
           ui.saveUserData(returnData)
-          // ui.setButtons()
           onIndexRecipes()
         })
         .catch()
@@ -148,7 +147,6 @@ const onDeleteFavorite = event => {
       api.getUserData()
         .then(returnData => {
           ui.saveUserData(returnData)
-          // ui.setButtons()
           onIndexRecipes()
         })
         .catch()

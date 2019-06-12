@@ -1,129 +1,57 @@
-[![General Assembly Logo](https://camo.githubusercontent.com/1a91b05b8f4d44b5bbfb83abac2b0996d8e26c92/687474703a2f2f692e696d6775722e636f6d2f6b6538555354712e706e67)](https://generalassemb.ly/education/web-development-immersive)
+# Recipe Database Client
+This is the frontend for my recipe database, a web app that lets users browse and favorite recipes on the site, as well as share their own recipes for others to see and favorite
 
-# browser-template
+#### Backend: https://github.com/tohearne/recipe-database-server
 
-A template for starting front-end projects. Webpack for `require` system, build
-pipeline, and development server. Boostrap and Handlebars.js included. No
-front-end frameworks included.
+## List technologies used
+-   html
+-   css/scss
+-   javascript
+-   ajax
+-   jquery
+-   handlebars
+-   bootstrap
+-   json
 
-## Installation
+## Document your planning and tell a story about your development process and problem-solving strategy.
+For this project I had no idea what I wanted to do at first, I eventually decided to take a basic premise (recipes) and add levels of complexity by having two ways users can have a relationship with a recipe. One being that they published the recipe and the other being that they like one that someone else made.
 
-1. [Download](../../archive/master.zip) this template.
-    - **Do Not Fork And Clone**
-    - Click the "Clone or Download" button and select "Download Zip".
-1. Move to the `wdi/projects` directory, then unzip the template directory with
-    `unzip /Users/<user-name>/Downloads/browser-template-master.zip`.
-1. Rename the template directory from `browser-template-master` to
-    `<project-name>-client`.
-1. Empty [`README.md`](README.md) and fill with your own content.
-1. Replace all instances of `tohearne.recipe-database-client` with the name of
-    your project.
-    - You can search for all instances of text in Atom by pressing
-    `commant + shift + f` on Mac or `ctrl + shift + f` on WSL.
-1. Move into the new project and `git init`.
-1. Add all of the files in your project with the command `git add --all`.
-      - **Note: This is the only time you should run this command!**
-1. Commit all of your files with the command `git commit`.
-      - Your commit title should read `Initial commit`.
-1. Install dependencies with `npm install`.
-1. Create a new repository on [github.com](https://github.com),
-    _not GitHub Enterprise_.
-1. Name the new repository with the same name used on Step 3.
-1. Follow the instructions on your new repository's setup page. For details on
-   how to push to Github, refer to the section on Github entitled "…or push an existing
-   repository from the command line." Further documentation can be found [here](https://help.github.com/articles/adding-an-existing-project-to-github-using-the-command-line/).
+With very few issue with the backend I was able to spend most of my time working on the api interactions in the front end and how to show/get information from the user
 
-## Structure
-
-### Scripts
-
-Developers should store JavaScript files in [`assets/scripts`](assets/scripts).
-The "manifest" or entry-point is
-[`assets/scripts/app.js`](assets/scripts/app.js). In general, only
-application initialization goes in this file. It's normal for developers to
-start putting all code in this file, but encourage them to break out different
-responsibilities and use the `require` syntax put references where they're
-needed.
-
-### Config
-
-Developers should set `apiUrls.production` and `apiUrls.development` in
-[`assets/scripts/config.js`](assets/scripts/config.js).  With
-`apiUrls` set, developers may rely on `apiUrl` as the base for API
-URLs.
-
-### Styles
-
-Developers should store styles in [`assets/styles`](assets/styles) and load them
-from [`assets/styles/index.scss`](assets/styles/index.scss). Bootstrap version 3 is
-included in this template.
-
-### Forms and Using `getFormFields`
-
-Developers should use [getFormFields](get-form-fields.md) to retrieve form data
-to send to an API.
-
-### Deployment
-
-To deploy a browser-template based SPA, run `grunt deploy`.
-
-## Adding Images
-
-To add images to your project, you must store them in the `public` directory.
-To use the image in HTML or CSS, write the path to the image like this:
-
-```html
-<img src="public/cat.jpg">
-```
-or
-```css
-#my-cool-div {
-  background-image: url('public/cat.jpg')
-}
-```
-
-Note that there's no `./` or `/` in front of `public/filename.jpg`.
-
-## Adding Fonts
-
-To add custom fonts to your app, you can either use a CDN like Google Fonts, or
-you can download the fonts and save them in the `public` directory. If you use
-the former method, follow the directions on the website providing the fonts.
-
-For local fonts, put the files in `public`, and then import and use them in a
-`.scss` file like this:
-
-```scss
-@font-face {
-  font-family: 'Nature Beauty';
-  src: url('public/Nature-Beauty.ttf') format('truetype');
-}
-
-.element-with-custom-font {
-  font-family: 'Nature Beauty';
-}
-```
-
-## Tasks
-
-Developers should run these often!
-
-- `grunt nag` or just `grunt`: runs code quality analysis tools on your code
-    and complains
-- `grunt make-standard`: reformats all your code in the JavaScript Standard Style
-- `grunt <server|serve|s>`: generates bundles, watches, and livereloads
-- `grunt build`: place bundled styles and scripts where `index.html` can find
-    them
-- `grunt deploy`: builds and deploys master branch
+The first thing I did was framework my HTML, I created all the forms and buttons I would need including the ones that I planned to turn into handlebars templates later.
+with all of these filled in I was able to get stated on my API interactions, starting with user auth events. I got stuck for a bit unsure as to why my curl scrips were working but my API wasnt, but after looking at it for a bit I realized that I had just named a few things "user" isntead of "credentials" a quick swap fixed it.
+Having user auth done I moved on to creating a cook at the same time as a user and then I started working on creating a recipe.
+This one was a bit tricky and I had to re-visit it later when I noticed an issue with the ordering of ingredients / steps. After getting the form data I used part of it to create the recipe, if that was successful I would then loop through all the ingredients and send api requests to make those, using the id from the newly created recipe to relate them, I did the same for the steps. What I realized later was that the API requests that I was sending didn't always get received/compleated in the order that I wanted, to fix this I made the function that creates the ingredients/steps an anyncronus one and had each of the requests await so that they would all be done in order.
+Now that there were recipes in the database I next worked on the index and show requests so the recipe information would be shown. For this I begain to work on using handlebars templates. I would take the placeholder HTML I made earlier, cut it out of the HTML document and paste it into a handlebars file to use as a base, from there I added in the variables which would carry the returned recipe's data. In the case of indexing them, I had a loop inside of the handlebars template so it would create elements for all of the recipes given to it.
+The next big feature I wanted to implement was being able to favorite recipes. For this I added a button to the recipe elements and had a data-id stored on it that matched the recipe's id. This made it easy to create the favorites.
+Wanting to have unfavoriting/editing recipes next I realized that I would need to check if the user publised that recipe or if it is already a favorite. Because recipes have users through favorites I was able to loop through those to find a matching ID and I was also able to look at the recipe for a matching cook id. Based on the result an different button template will appear.
+Unfavoreting was fairly easy, but editing took a bit.
+For the form I set up a template that I would then fill with the recipe's current information, my initial idea was to let the user add and remove ingredients/steps but after realizing how it would require checking to see if the line already existed or to remove the html element and then have it know to send a delete request, I decided it would take too long for the amount of time I had left.
+I set up a way to sort the array of recipes based on the newest (reverse the array) or the ones with the most favorites (reverse the array and then sort by favorites.lentgh)
+Similar to the sorting, I set up some filters that when clicked would index the recipes and then remove any from the array that didn't match what was being looked for (two for if it is a favorite or one that you own, and another that filters by a string you give it)
+I also added some UI events that would hide or show elements based on whether the user is logged in or not.
+With all the events and API interactions all set up the CSS took a little extra tweaking (adding/removing/changing class names) but for the most part went as planned. Some extra time could be spent to style it better though...
 
 
-## Additional Resources
+## List unsolved problems which would be fixed in future iterations.
+Not really issues, but more things I would like to do if I had more time
+Right now you can't remove ingredients or steps from the create recipe form
+Right now you can't add or remove ingredients or steps when updating a recipe
 
-- [Modern Javascript Explained for Dinosaurs](https://medium.com/@peterxjang/modern-javascript-explained-for-dinosaurs-f695e9747b70)
-- [Making Sense of Front End Build Tools](https://medium.freecodecamp.org/making-sense-of-front-end-build-tools-3a1b3a87043b)
+## Link to Wireframes and user stories.
+Wireframes: https://imgur.com/a/pjOtY0C
 
-## [License](LICENSE)
-
-1. All content is licensed under a CC­BY­NC­SA 4.0 license.
-1. All software code is licensed under GNU GPLv3. For commercial use or
-    alternative licensing, please contact legal@ga.co.
+User stories:
+-   As a user I want to browse the recipies without needing to sign up/in
+-   As a user I want to be able to create an account
+-   As a user I want to be able to sign in to my account
+-   As a user I want to be able to change my password
+-   As a user I want to be able to sign out
+-   As a user I want to be able to save recipes as my favorites
+-   As a user I want to be able to publish my own recipes
+-   As a user I want to be able to view my published or favorited recipes seperately
+-   As a user I want to be able to search for recipes by name
+-   As a user I want to be able to sort the recipes by popularity or newest
+-   As a user I want to be able to edit my recipes
+-   As a user I want to be able to remove recipes from my favorites
+-   As a user I want to be able to delete a recipe I published
