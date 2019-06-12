@@ -61,13 +61,15 @@ const onCreateRecipe = event => {
   const formData = getFormFields(event.target)
   event.target.reset()
   api.createRecipe(formData.recipe.name)
-    .then(responseData => {
-      formData['ingredient-names'].forEach((name, index) => {
-        api.createIngredient(name, formData['ingredient-amounts'][index], responseData.recipe.id)
-      })
-      formData['step-titles'].forEach((title, index) => {
-        api.createStep(title, formData['step-instructions'][index], responseData.recipe.id)
-      })
+    .then(async function (responseData) {
+      for (let i = 0; i < formData['ingredient-names'].length; i++) {
+        await api.createIngredient(formData['ingredient-names'][i], formData['ingredient-amounts'][i], responseData.recipe.id)
+          .then(console.log)
+      }
+      for (let i = 0; i < formData['step-titles'].length; i++) {
+        api.createStep(formData['step-titles'][i], formData['step-instructions'][i], responseData.recipe.id)
+          .then(console.log)
+      }
       api.getUserData()
         .then(returnData => {
           ui.saveUserData(returnData)
@@ -132,7 +134,7 @@ const onCreateFavorite = event => {
       api.getUserData()
         .then(returnData => {
           ui.saveUserData(returnData)
-          ui.setButtons()
+          // ui.setButtons()
           onIndexRecipes()
         })
         .catch()
@@ -146,7 +148,7 @@ const onDeleteFavorite = event => {
       api.getUserData()
         .then(returnData => {
           ui.saveUserData(returnData)
-          ui.setButtons()
+          // ui.setButtons()
           onIndexRecipes()
         })
         .catch()
