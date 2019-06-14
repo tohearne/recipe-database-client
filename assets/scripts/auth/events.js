@@ -90,9 +90,9 @@ const onUpdateRecipe = event => {
       store.recipe.steps.forEach((step, index) => {
         api.updateStep(step.id, formData['step-titles'][index], formData['step-instructions'][index])
       })
-      api.getUserData()
+      api.showRecipe(store.recipe.id)
         .then(returnData => {
-          ui.saveUserData(returnData)
+          ui.showRecipeUpdate(returnData)
           ui.onUpdateRecipeSuccess()
           onIndexRecipes()
         })

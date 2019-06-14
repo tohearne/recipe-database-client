@@ -52,11 +52,11 @@ const onSignOutSuccess = () => {
   loggedOut()
 }
 
-const onCreateRecipeSuccess = responseData => {
+const onCreateRecipeSuccess = () => {
   $('.form-message').text('Recipe Created!').removeClass('failed').fadeIn(messageFadeIn).delay(messageDurration).fadeOut(messageFadeOut)
 }
 
-const onUpdateRecipeSuccess = responseData => {
+const onUpdateRecipeSuccess = () => {
   $('.form-message').text('Recipe Updated!').removeClass('failed').fadeIn(messageFadeIn).delay(messageDurration).fadeOut(messageFadeOut)
 }
 
