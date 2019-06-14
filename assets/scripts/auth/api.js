@@ -67,7 +67,8 @@ const createIngredient = (name, amount, id) => $.ajax({
   data: {ingredient: {
     name: name,
     amount: amount,
-    recipe_id: id
+    recipe_id: id,
+    cook_id: store.userAuth.cook.id
   }},
   headers: {
     Authorization: `Token ${store.userAuth.token}`
@@ -80,7 +81,8 @@ const createStep = (title, instructions, id) => $.ajax({
   data: {step: {
     title: title,
     instructions: instructions,
-    recipe_id: id
+    recipe_id: id,
+    cook_id: store.userAuth.cook.id
   }},
   headers: {
     Authorization: `Token ${store.userAuth.token}`
@@ -158,10 +160,6 @@ const deleteFavorite = id => $.ajax({
   }
 })
 
-const showCook = () => $.ajax({
-  url: `${config.apiUrl}/cooks/${store.userAuth.cook.id}`
-})
-
 module.exports = {
   signUp,
   createCook,
@@ -179,6 +177,5 @@ module.exports = {
   indexRecipes,
   showRecipe,
   createFavorite,
-  deleteFavorite,
-  showCook
+  deleteFavorite
 }
