@@ -1,13 +1,16 @@
 @import '~bootstrap/scss/bootstrap';
+@import url('https://fonts.googleapis.com/css?family=Comfortaa&display=swap');
 @import './themes';
 
 body {
-  background-color: $background-medium;
+  background-color: $background-light;
+  font-family: 'Comfortaa', cursive;
 }
 
 header {
   align-items: center;
-  background-color: $background-light;
+  background-color: $background-medium;
+  border-bottom: 5px solid $background-dark;
   display: flex;
   justify-content: space-between;
   padding: 0 1rem;
@@ -44,8 +47,8 @@ nav {
 
 .recipe-preview {
   align-content: flex-start;
-  background-color: $background-light;
-  border: 0;
+  background-color: $background-medium;
+  border: 5px solid $background-dark;
   border-radius: 5px;
   display: flex;
   flex-wrap: wrap;
@@ -65,7 +68,7 @@ nav {
 }
 
 .overlay-form {
-  background-color: $background-light;
+  background-color: $background-medium;
   border-radius: 5px;
   display: flex;
   flex-direction: column;
