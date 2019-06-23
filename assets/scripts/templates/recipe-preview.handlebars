@@ -1,9 +1,9 @@
 {{#each recipes as |recipe|}}
-  <button class='recipe-preview recipe-show' data-id='{{recipe.id}}'>
-    <div class='form-header flex-space'>
+  <button data-id='{{recipe.id}}' class='recipe-preview recipe-show'>
+    <div data-id='{{recipe.id}}' class='form-header flex-space'>
       <h4 data-id='{{recipe.id}}'>{{recipe.name}}</h4>
-      <div class='preview-buttons'>
-        <span class='logged-in fav-edit-button' data-id='{{recipe.id}}'></span>
+      <div data-id='{{recipe.id}}' class='preview-buttons'>
+        <span data-id='{{recipe.id}}' class='logged-in fav-edit-button'></span>
       </div>
     </div>
     <h6 data-id='{{recipe.id}}'>By: {{recipe.cook.name}}</h6>
