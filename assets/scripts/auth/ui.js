@@ -107,7 +107,6 @@ const onIndexRecipesSuccess = responseData => {
 const onShowRecipeSuccess = responseData => {
   responseData.recipe.ingredients = responseData.recipe.ingredients.sort((x, y) => (x.id > y.id) ? 1 : -1)
   responseData.recipe.steps = responseData.recipe.steps.sort((x, y) => (x.id > y.id) ? 1 : -1)
-  console.log(responseData.recipe.favorites.length)
   $('.overlay').html(recipeFullTemplate({ recipe: responseData.recipe }))
   store.overlay = true
   setButtons()
