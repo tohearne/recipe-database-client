@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+    <head>
+      <title>Recipe Database</title>
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+
+      <!-- Do not add `link` tags-->
+      <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+
+      <!-- Do not add `script` tags-->
+      <script src="public/vendor.js" type="text/javascript" charset="utf-8" defer></script>
+      <script src="public/application.js" type="text/javascript" charset="utf-8" defer></script>
+    </head>
+    <body>
+      <header>
+        <h1>Food!</h1>
+        <form class='search-bar'>
+          <input type="text" name="search[text]" placeholder='Search'>
+          <input type="submit">
+        </form>
+        <div class='user-auth'>
+          <h5 class='login-message'></h5>
+          <div class = 'logged-out'>
+            <button class='show-sign-up'>Sign up</button>
+            <button class='show-sign-in'>Sign in</button>
+          </div>
+          <div class='logged-in'>
+            <button class='show-change-pw'>Change Password</button>
+            <button class='user-sign-out'>Sign out</button>
+          </div>
+        </div>
+      </header>
+      <main>
+        <nav>
+          <div class='result-filters'>
+            <button class='filter-new'>Newest</button>
+            <button class='filter-popular'>Most Popular</button>
+          </div>
+          <div class='logged-in'>
+            <button class='filter-all'>All Recipes</button>
+            <button class='filter-favorites'>Favorites</button>
+            <button class='filter-user'>Your Recipes</button>
+            <button class='show-recipe-form'>New Recipe</button>
+          </div>
+        </nav>
+        <div class='main-content'>
+          <h4 class='oops'>Welcome! Just give me a moment to wake up...</h4>
+        </div>
+        <div class='overlay'>
+        </div>
+        <div class='confirmation'>
+        </div>
+      </main>
+    </body>
+</html>
